@@ -36,7 +36,9 @@ int main(void)
 	for(;;)
 	{
 
-		GPIOA->ODR ^= (1<<5);
+		GPIOA->BSRR = (1<<5);  /* set */
+		GPIOA->BRR = (1<<5);   /* reset */
+		GPIOA->ODR ^= (1<<5);  /* toggle */
 		for (volatile uint32_t i = 0; i < 100000; i++) {}
 	}
 }
