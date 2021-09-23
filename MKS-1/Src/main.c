@@ -32,26 +32,30 @@ int main(void)
 
 	uint8_t pole[32] = {1,0,1,0,1,0,0,1,1,1,0,1,1,1,0,1,1,1,0,0,1,0,1,0,1,0,0,0,0,0,0,0};
 
-    /* Loop forever */
+	/*
+    // Loop forever
 	while(1){
-	for(uint8_t i = 0; i < 32; i++)
-	{
-		if (pole[i] == 1)
+		for(uint8_t i = 0; i < 32; i++)
 		{
-
-			GPIOA->BSRR = (1<<5);
-
-		}
-
-		else
-
-		{
-
+			if (pole[i] == 1) {
+				GPIOA->BSRR = (1<<5);
+			} else {
 				GPIOA->BRR = (1<<5);
-		}
+			}
 
-		for (volatile uint32_t i = 0; i < 1000000; i++) {}
-	}
+ */
+	while(1){
+	uint32_t pole_bin = 0b10101001110111011100101010000000;
+	for(uint8_t i = 0; i < 32; i++)
+			{
+				if (pole_bin&1) {
+					GPIOA->BSRR = (1<<5);
+				} else {
+					GPIOA->BRR = (1<<5);
+				}
+				pole_bin=pole_bin>>1;
+			for (volatile uint32_t i = 0; i < 100000; i++) {}
+		}
 	}
 }
 
