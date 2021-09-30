@@ -45,15 +45,15 @@ int main(void)
 
  */
 	while(1){
-	uint32_t pole_bin = 0b10101001110111011100101010000000;
-	for(uint8_t i = 0; i < 32; i++)
-			{
-				if (pole_bin&1) {
-					GPIOA->BSRR = (1<<5);
-				} else {
-					GPIOA->BRR = (1<<5);
-				}
-				pole_bin=pole_bin>>1;
+		uint32_t pole_bin = 0b10101001110111011100101010000000;
+		for(uint8_t i = 0; i < 32; i++)
+		{
+			if (pole_bin&1) {
+				GPIOA->BSRR = (1<<5);
+			} else {
+				GPIOA->BRR = (1<<5);
+			}
+			pole_bin=pole_bin>>1;
 			for (volatile uint32_t i = 0; i < 100000; i++) {}
 		}
 	}
