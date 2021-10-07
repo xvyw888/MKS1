@@ -9,6 +9,7 @@
 #include "stm32f0xx.h"
 #include "sct.h"
 
+
 void sct_init(void){
 	RCC->AHBENR |= RCC_AHBENR_GPIOBEN;
 	GPIOB->MODER |= GPIO_MODER_MODER3_0;
@@ -16,6 +17,7 @@ void sct_init(void){
 	GPIOB->MODER |= GPIO_MODER_MODER5_0;
 	GPIOB->MODER |= GPIO_MODER_MODER10_0;
 }
+
 
 void sct_led(uint32_t value){
 	for( uint8_t i = 0; i < 32; i++ ){
