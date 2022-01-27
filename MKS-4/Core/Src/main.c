@@ -131,7 +131,7 @@ int main(void)
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	// State automat
-	static enum {SHOW_POT, SHOW_VOLT, SHOW_TEMP} state = SHOW_POT;
+	static enum {RIGHT, LEFT} state = RIGHT;
 	uint32_t timer;
 
 	while (1)
@@ -140,35 +140,41 @@ int main(void)
 
 		/* USER CODE BEGIN 3 */
 		// Voltage conversion
-		uint32_t voltage = 330 * (*VREFINT_CAL_ADDR) / raw_volt;
+		//uint32_t voltage = 330 * (*VREFINT_CAL_ADDR) / raw_volt;
 		// Temperature conversion
 		int32_t temperature = (raw_temp - (int32_t)(*TEMP30_CAL_ADDR));
 		temperature = temperature * (int32_t)(110 - 30);
 		temperature = temperature / (int32_t)(*TEMP110_CAL_ADDR - *TEMP30_CAL_ADDR);
 		temperature = temperature + 30;
+		/*variable*/
+		uint32_t tick = 0;
 
+		/*STATE evaluating*/
 		switch (state) {
-		case SHOW_POT:
-			sct_value(raw_pot*500/4096, raw_pot*9/4096);
+		case RIGHT:
+			sct_value(0, (tick-HAL_GetTick())*9/2000);
 			break;
-		case SHOW_VOLT:
-			sct_value(voltage, raw_pot*9/4096);
+		case LEFT:
+			sct_value(0, (tick-HAL_GetTick())*9/2000);
 			break;
-		case SHOW_TEMP:
-			sct_value(temperature, raw_pot*9/4096);
-			break;
+		}
+		if (HAL_GetTick()>tick+2000){
+			tick = 0;
+		}
+		else{
+			tick += HAL_GetTick;
 		}
 		if(HAL_GPIO_ReadPin(S1_GPIO_Port, S1_Pin) == 0){
 			timer = HAL_GetTick();
-			state = SHOW_VOLT;
+			state = LEFT;
 		}
 		else if (HAL_GPIO_ReadPin(S2_GPIO_Port, S2_Pin) == 0){
 			timer = HAL_GetTick();
-			state = SHOW_TEMP;
+			state = RIGHT;
 		}
-		if (HAL_GetTick() >= timer + 1000){
+		if (HAL_GetTick() >= timer + 2000){
 			// timer = Tick;
-			state = SHOW_POT;
+			state = RIGHT;
 		}
 
 	}

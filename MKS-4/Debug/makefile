@@ -61,8 +61,8 @@ all: main-build
 main-build: MKS-4.elf secondary-outputs
 
 # Tool invocations
-MKS-4.elf: $(OBJS) $(USER_OBJS) D:\Documents\MKS_novy\MKS-4\STM32F030R8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "MKS-4.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0 -T"D:\Documents\MKS_novy\MKS-4\STM32F030R8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="MKS-4.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+MKS-4.elf: $(OBJS) $(USER_OBJS) D:\Documents\MKS1\MKS-4\STM32F030R8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "MKS-4.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0 -T"D:\Documents\MKS1\MKS-4\STM32F030R8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="MKS-4.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
